@@ -60,4 +60,7 @@ echo "ro.cm.device=$CM_DEVICE"
 
 echo "ro.cmremix.version=$CMREMIX_VERSION"
 
+echo "# Hardware info"
+. ./vendor/cmremix/tools/hardware
+
 echo "# end build properties"
