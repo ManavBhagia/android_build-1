@@ -112,6 +112,10 @@ endif
 # limitations under the License.
 #
 # Include custom gcc flags.  Seperate them so they can be easily managed.
+ifeq ($(TARGET_USE_PIPE),true)
+include $(BUILD_SYSTEM)/pipe.mk
+endif
+
 ifeq ($(STRICT_ALIASING),true)
 include $(BUILD_SYSTEM)/strict.mk
 endif
