@@ -43,7 +43,8 @@ LOCAL_DISABLE_GRAPHITE := \
 	libjni_filtershow_filters \
 	libSR_Core \
 	fio \
-	libavcodec
+	libavcodec \
+	libavformat
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
 ifdef LOCAL_CONLYFLAGS
