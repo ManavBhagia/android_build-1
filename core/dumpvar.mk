@@ -75,13 +75,6 @@ $(info   TARGET_BUILD_APPS=$(TARGET_BUILD_APPS))
 $(info   TARGET_ARCH=$(TARGET_ARCH))
 $(info   TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
 $(info   TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
-$(info   TARGET_GCC_VERSION=$(TARGET_GCC_VERSION))
-$(info   TARGET_NDK_GCC_VERSION=$(TARGET_NDK_GCC_VERSION))
-ifdef TARGET_GCC_VERSION_ARM
-$(info   TARGET_KERNEL_TOOLCHAIN=$(TARGET_GCC_VERSION_ARM))
-else
-$(info   TARGET_KERNEL_TOOLCHAIN=4.8)
-endif
 $(info   HOST_ARCH=$(HOST_ARCH))
 $(info   HOST_OS=$(HOST_OS))
 $(info   HOST_OS_EXTRA=$(HOST_OS_EXTRA))
@@ -91,6 +84,60 @@ $(info   OUT_DIR=$(OUT_DIR))
 ifeq ($(CYNGN_TARGET),true)
 $(info   CYNGN_TARGET=$(CYNGN_TARGET))
 $(info   CYNGN_FEATURES=$(CYNGN_FEATURES))
+endif
+$(info ============================================)
+$(info ============================================)
+$(info   TARGET_GCC_VERSION=$(TARGET_GCC_VERSION))
+$(info   TARGET_NDK_GCC_VERSION=$(TARGET_NDK_GCC_VERSION))
+ifdef TARGET_GCC_VERSION_ARM
+$(info   TARGET_KERNEL_TOOLCHAIN=$(TARGET_GCC_VERSION_ARM))
+else
+$(info   TARGET_KERNEL_TOOLCHAIN=4.8)
+endif
+ifdef USE_O3_OPTIMIZATIONS
+$(info   USE_O3_OPTIMIZATIONS=$(USE_O3_OPTIMIZATIONS))
+else
+$(info   USE_O3_OPTIMIZATIONS=No)
+endif
+ifdef ENABLE_MODULAR_O3
+$(info   ENABLE_MODULAR_O3=$(ENABLE_MODULAR_O3))
+else
+$(info   ENABLE_MODULAR_O3=No)
+endif
+ifdef USE_HOST_4_8
+$(info   USE_HOST_4_8=$(USE_HOST_4_8))
+else
+$(info   USE_HOST_4_8=No)
+endif
+ifdef GRAPHITE_OPTS
+$(info   GRAPHITE_OPTIMIZATIONS=$(GRAPHITE_OPTS))
+else
+$(info   GRAPHITE_OPTIMIZATIONS=No)
+endif
+ifdef STRICT_ALIASING
+$(info   STRICT_ALIASING=$(STRICT_ALIASING))
+else
+$(info   STRICT_ALIASING=No)
+endif
+ifdef KRAIT_TUNINGS
+$(info   KRAIT_TUNINGS=$(KRAIT_TUNINGS))
+else
+$(info   KRAIT_TUNINGS=No)
+endif
+ifdef ENABLE_GCCONLY
+$(info   ENABLE_GCCONLY=$(ENABLE_GCCONLY))
+else
+$(info   ENABLE_GCCONLY=No)
+endif
+ifdef LOCAL_LTO
+$(info   LOCAL_LTO=$(LOCAL_LTO))
+else
+$(info   LOCAL_LTO=No)
+endif
+ifdef TARGET_USE_PIPE
+$(info   TARGET_USE_PIPE=$(TARGET_USE_PIPE))
+else
+$(info   TARGET_USE_PIPE=No)
 endif
 $(info ============================================)
 $(info ============================================)
