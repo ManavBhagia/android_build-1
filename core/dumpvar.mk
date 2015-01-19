@@ -139,6 +139,11 @@ $(info   TARGET_USE_PIPE=$(TARGET_USE_PIPE))
 else
 $(info   TARGET_USE_PIPE=No)
 endif
+ifdef FLOOP_NEST_OPTIMIZE
+$(info   FLOOP_NEST_OPTIMIZE=$(FLOOP_NEST_OPTIMIZE))
+else
+$(info   FLOOP_NEST_OPTIMIZE=No)
+endif
 $(info ============================================)
 $(info ============================================)
 $(info   GCC_VERSION_ROM=$(TARGET_GCC_VERSION_AND))
