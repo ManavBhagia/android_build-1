@@ -112,6 +112,10 @@ endif
 # limitations under the License.
 #
 # Include custom gcc flags.  Seperate them so they can be easily managed.
+ifeq ($(LOCAL_LTO),true)
+include $(BUILD_SYSTEM)/lto.mk
+endif
+
 ifeq ($(TARGET_USE_PIPE),true)
 include $(BUILD_SYSTEM)/pipe.mk
 endif
