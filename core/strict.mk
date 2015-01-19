@@ -66,7 +66,18 @@ LOCAL_DISABLE_STRICT := \
 	libc_gdtoa \
 	libc_openbsd \
 	libc \
-	libc_nomalloc
+	libc_nomalloc \
+	libc_malloc \
+	camera.msm8084 \
+	libfusetwrp \
+	libguitwrp \
+	libwnndict \
+	libtwrpmtp \
+	libstlport_static \
+	gatt_testtool \
+	libfuse \
+	lsof \
+	libOmxVenc
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_STRICT), $(LOCAL_MODULE))))
 ifndef LOCAL_CONLYFLAGS
