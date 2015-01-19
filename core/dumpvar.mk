@@ -146,8 +146,8 @@ ifneq ($(SM_AND_VERSION),)
 $(info   GCC_VERSION_ROM_VARIANT=$(SM_AND_VERSION))
 endif
 $(info   GCC_VERSION_KERNEL=$(TARGET_GCC_VERSION_ARM))
-ifneq ($(SM_ARM_VERSION),)
-$(info   GCC_VERSION_KERNEL_VARIANT=$(SM_ARM_VERSION))
+ifneq ($(SM_KERNEL_VERSION),)
+$(info   GCC_VERSION_KERNEL_VARIANT=$(SM_KERNEL_VERSION))
 endif
 $(info ============================================)
 endif
