@@ -88,4 +88,14 @@ $(info   CYNGN_TARGET=$(CYNGN_TARGET))
 $(info   CYNGN_FEATURES=$(CYNGN_FEATURES))
 endif
 $(info ============================================)
+$(info ============================================)
+$(info   GCC_VERSION_ROM=$(TARGET_GCC_VERSION_AND))
+ifneq ($(SM_AND_VERSION),)
+$(info   GCC_VERSION_ROM_VARIANT=$(SM_AND_VERSION))
+endif
+$(info   GCC_VERSION_KERNEL=$(TARGET_GCC_VERSION_ARM))
+ifneq ($(SM_ARM_VERSION),)
+$(info   GCC_VERSION_KERNEL_VARIANT=$(SM_ARM_VERSION))
+endif
+$(info ============================================)
 endif
