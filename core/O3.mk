@@ -31,65 +31,31 @@ LOCAL_DISABLE_O3 := \
 	third_party_angle_src_translator_lib_gyp \
 	third_party_WebKit_Source_core_webcore_generated_gyp
 
+O2_FLAGS := -O2 \
+	-finline-functions \
+	-funswitch-loops \
+	-fpredictive-commoning \
+	-fgcse-after-reload \
+	-ftree-loop-distribute-patterns \
+	-ftree-slp-vectorize \
+	-fvect-cost-model \
+	-ftree-partial-pre \
+	-fipa-cp-clone \
+	-Wno-unused-parameter \
+	-Wno-unused-but-set-variable \
+	-Wno-maybe-uninitialized
+
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3), $(LOCAL_MODULE))))
 ifndef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += -O2 \
-	-finline-functions \
-	-funswitch-loops \
-	-fpredictive-commoning \
-	-fgcse-after-reload \
-	-ftree-loop-distribute-patterns \
-	-ftree-slp-vectorize \
-	-fvect-cost-model \
-	-ftree-partial-pre \
-	-fipa-cp-clone \
-	-Wno-unused-parameter \
-	-Wno-unused-but-set-variable \
-	-Wno-maybe-uninitialized
+LOCAL_CONLYFLAGS += $(O2_FLAGS)
 else
-LOCAL_CONLYFLAGS := -O2 \
-	-finline-functions \
-	-funswitch-loops \
-	-fpredictive-commoning \
-	-fgcse-after-reload \
-	-ftree-loop-distribute-patterns \
-	-ftree-slp-vectorize \
-	-fvect-cost-model \
-	-ftree-partial-pre \
-	-fipa-cp-clone \
-	-Wno-unused-parameter \
-	-Wno-unused-but-set-variable \
-	-Wno-maybe-uninitialized
+LOCAL_CONLYFLAGS := $(O2_FLAGS)
 endif
 
 ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += -O2 \
-	-finline-functions \
-	-funswitch-loops \
-	-fpredictive-commoning \
-	-fgcse-after-reload \
-	-ftree-loop-distribute-patterns \
-	-ftree-slp-vectorize \
-	-fvect-cost-model \
-	-ftree-partial-pre \
-	-fipa-cp-clone \
-	-Wno-unused-parameter \
-	-Wno-unused-but-set-variable \
-	-Wno-maybe-uninitialized
+LOCAL_CPPFLAGS += $(O2_FLAGS)
 else
-LOCAL_CPPFLAGS := -O2 \
-	-finline-functions \
-	-funswitch-loops \
-	-fpredictive-commoning \
-	-fgcse-after-reload \
-	-ftree-loop-distribute-patterns \
-	-ftree-slp-vectorize \
-	-fvect-cost-model \
-	-ftree-partial-pre \
-	-fipa-cp-clone \
-	-Wno-unused-parameter \
-	-Wno-unused-but-set-variable \
-	-Wno-maybe-uninitialized
+LOCAL_CPPFLAGS := $(O2_FLAGS)
 endif
 endif
 #####

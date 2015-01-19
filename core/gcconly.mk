@@ -19,69 +19,32 @@ LOCAL_DISABLE_GCCONLY := \
 	libwebviewchromium_loader \
 	libwebviewchromium_plat_support
 
+GCCONLY_FLAGS += -fira-loop-pressure \
+	-fforce-addr \
+	-funsafe-loop-optimizations \
+	-funroll-loops \
+	-ftree-loop-distribution \
+	-fsection-anchors \
+	-ftree-loop-im \
+	-ftree-loop-ivcanon \
+	-ffunction-sections \
+	-fgcse-las \
+	-fgcse-sm \
+	-fweb \
+	-ffp-contract=fast \
+	-mvectorize-with-neon-quad
+
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_GCCONLY), $(LOCAL_MODULE))))
 ifndef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += -fira-loop-pressure \
-	-fforce-addr \
-	-funsafe-loop-optimizations \
-	-funroll-loops \
-	-ftree-loop-distribution \
-	-fsection-anchors \
-	-ftree-loop-im \
-	-ftree-loop-ivcanon \
-	-ffunction-sections \
-	-fgcse-las \
-	-fgcse-sm \
-	-fweb \
-	-ffp-contract=fast \
-	-mvectorize-with-neon-quad
+LOCAL_CONLYFLAGS += $(GCCONLY_FLAGS)
 else
-LOCAL_CONLYFLAGS := -fira-loop-pressure \
-	-fforce-addr \
-	-funsafe-loop-optimizations \
-	-funroll-loops \
-	-ftree-loop-distribution \
-	-fsection-anchors \
-	-ftree-loop-im \
-	-ftree-loop-ivcanon \
-	-ffunction-sections \
-	-fgcse-las \
-	-fgcse-sm \
-	-fweb \
-	-ffp-contract=fast \
-	-mvectorize-with-neon-quad
+LOCAL_CONLYFLAGS := $(GCCONLY_FLAGS)
 endif
 
 ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += -fira-loop-pressure \
-	-fforce-addr \
-	-funsafe-loop-optimizations \
-	-funroll-loops \
-	-ftree-loop-distribution \
-	-fsection-anchors \
-	-ftree-loop-im \
-	-ftree-loop-ivcanon \
-	-ffunction-sections \
-	-fgcse-las \
-	-fgcse-sm \
-	-fweb \
-	-ffp-contract=fast \
-	-mvectorize-with-neon-quad
+LOCAL_CPPFLAGS += $(GCCONLY_FLAGS)
 else
-LOCAL_CPPFLAGS := -fira-loop-pressure \
-	-fforce-addr \
-	-funsafe-loop-optimizations \
-	-funroll-loops \
-	-ftree-loop-distribution \
-	-fsection-anchors \
-	-ftree-loop-im \
-	-ftree-loop-ivcanon \
-	-ffunction-sections \
-	-fgcse-las \
-	-fgcse-sm \
-	-fweb \
-	-ffp-contract=fast \
-	-mvectorize-with-neon-quad
+LOCAL_CPPFLAGS := $(GCCONLY_FLAGS)
 endif
 endif
 #####

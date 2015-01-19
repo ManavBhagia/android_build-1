@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The SaberMod Project
+# Copyright (C) 2014 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+GRAPHITE_FLAGS := \
+	-fgraphite \
+	-floop-flatten \
+	-floop-parallelize-all \
+	-ftree-loop-linear \
+	-floop-interchange \
+	-floop-strip-mine \
+	-floop-block
+
 # Force disable some modules that are not compatible with graphite flags
 LOCAL_DISABLE_GRAPHITE := \
 	libunwind \
@@ -22,6 +32,8 @@ LOCAL_DISABLE_GRAPHITE := \
 	libmedia_jni \
 	libstagefright_mp3dec \
 	libart \
+	libart-compiler \
+	mdnsd \
 	libstagefright_amrwbenc \
 	libpdfium \
 	libpdfiumcore \
@@ -29,47 +41,27 @@ LOCAL_DISABLE_GRAPHITE := \
 	libwebviewchromium_loader \
 	libwebviewchromium_plat_support \
 	libjni_filtershow_filters \
-	fio
+	libSR_Core \
+	fio \
+	libavcodec
 
-ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE), $(LOCAL_MODULE))))
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
 ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	-fgraphite \
-	-floop-flatten \
-	-floop-parallelize-all \
-	-ftree-loop-linear \
-	-floop-interchange \
-	-floop-strip-mine \
-	-floop-block
+LOCAL_CONLYFLAGS += $(GRAPHITE_FLAGS)
 else
-LOCAL_CONLYFLAGS := \
-	-fgraphite \
-	-floop-flatten \
-	-floop-parallelize-all \
-	-ftree-loop-linear \
-	-floop-interchange \
-	-floop-strip-mine \
-	-floop-block
+LOCAL_CONLYFLAGS := $(GRAPHITE_FLAGS)
 endif
 
 ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	-fgraphite \
-	-floop-flatten \
-	-floop-parallelize-all \
-	-ftree-loop-linear \
-	-floop-interchange \
-	-floop-strip-mine \
-	-floop-block
+LOCAL_CPPFLAGS += $(GRAPHITE_FLAGS)
 else
-LOCAL_CPPFLAGS := \
-	-fgraphite \
-	-floop-flatten \
-	-floop-parallelize-all \
-	-ftree-loop-linear \
-	-floop-interchange \
-	-floop-strip-mine \
-	-floop-block
+LOCAL_CPPFLAGS := $(GRAPHITE_FLAGS)
+endif
+
+ifndef LOCAL_LDFLAGS
+LOCAL_LDFLAGS  := $(GRAPHITE_FLAGS)
+else
+LOCAL_LDFLAGS  += $(GRAPHITE_FLAGS)
 endif
 endif
 
