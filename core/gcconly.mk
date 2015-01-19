@@ -47,4 +47,119 @@ else
 LOCAL_CPPFLAGS := $(GCCONLY_FLAGS)
 endif
 endif
+
+ifeq ($(FLOOP_NEST_OPTIMIZE),true)
+LOCAL_DISABLE_NEST := \
+	libunwind \
+	libFFTEm \
+	libicui18n \
+	libskia \
+	libvpx \
+	libmedia_jni \
+	libstagefright_mp3dec \
+	libart \
+	libstagefright_amrwbenc \
+	libpdfium \
+	libpdfiumcore \
+	libwebviewchromium \
+	libwebviewchromium_loader \
+	libwebviewchromium_plat_support \
+	libjni_filtershow_filters \
+	fio \
+	libselinux \
+	init \
+	libmincrypt \
+	adbd \
+	libpixelflinger_static \
+	libz \
+	pigz \
+	libclearsilverregex \
+	busybox \
+	libext2fs \
+	e2fsck \
+	libstlport \
+	libft2 \
+	libjpeg_static \
+	libmincrypttwrp \
+	libopenaes \
+	toolbox_recovery \
+	libandroid_runtime \
+	libicuuc \
+	libwebp-encode \
+	libhwui \
+	libsfntly \
+	libminikin \
+	libbt-brcm_stack \
+	bluetooth.default \
+	libtinyxml2 \
+	libnfc-nci \
+	libxml2 \
+	libunz \
+	adb \
+	dalvikvm \
+	dnsmasq \
+	toolbox \
+	libart-compiler \
+	hostapd \
+	mdnsd \
+	libsoftkeymaster \
+	libaudioflinger \
+	libstagefright_avc_common \
+	libstagefright \
+	libogg \
+	libvorbisidec \
+	libstagefright_aacenc \
+	libstagefright_id3 \
+	libFLAC \
+	wpa_supplicant \
+	libstagefright_amrnb_common \
+	libjavacore \
+	librtp_jni \
+	libgsm \
+	libstagefright_amrnbenc \
+	libmmcamera_interface \
+	camera.hammerhead \
+	nfc_nci.bcm2079x.default \
+	libfilterfw_jni \
+	libfilterfw_native \
+	libpixelflinger \
+	libsqlite_jni \
+	libFraunhoferAAC \
+	librs_jni \
+	libstagefright_amrwbdec \
+	libstagefright_avcenc \
+	libhevcdec \
+	libstagefright_m4vh263dec \
+	libstagefright_m4vh263enc \
+	libwebrtc_spl \
+	libwebrtc_apm_utility \
+	libwebrtc_apm \
+	libwebrtc_vad \
+	libwebrtc_system_wrappers \
+	libwebrtc_aecm \
+	libreverb \
+	libwifi-service \
+	libstlport_static \
+	libgtest \
+	backtrace_test \
+	libbz
+
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_NEST), $(LOCAL_MODULE))))
+ifdef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += \
+	-floop-nest-optimize
+else
+LOCAL_CONLYFLAGS := \
+	-floop-nest-optimize
+endif
+
+ifdef LOCAL_CPPFLAGS
+LOCAL_CPPFLAGS += \
+	-floop-nest-optimize
+else
+LOCAL_CPPFLAGS := \
+	-floop-nest-optimize
+endif
+endif
+endif
 #####
