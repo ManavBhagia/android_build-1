@@ -31,7 +31,7 @@ LOCAL_DISABLE_O3 := \
 	third_party_angle_src_translator_lib_gyp \
 	third_party_WebKit_Source_core_webcore_generated_gyp
 
-O2_FLAGS := -O2 \
+O3_FLAGS := -O2 \
 	-finline-functions \
 	-funswitch-loops \
 	-fpredictive-commoning \
@@ -47,15 +47,15 @@ O2_FLAGS := -O2 \
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3), $(LOCAL_MODULE))))
 ifndef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += $(O2_FLAGS)
+LOCAL_CONLYFLAGS += $(O3_FLAGS)
 else
-LOCAL_CONLYFLAGS := $(O2_FLAGS)
+LOCAL_CONLYFLAGS := $(O3_FLAGS)
 endif
 
 ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += $(O2_FLAGS)
+LOCAL_CPPFLAGS += $(O3_FLAGS)
 else
-LOCAL_CPPFLAGS := $(O2_FLAGS)
+LOCAL_CPPFLAGS := $(O3_FLAGS)
 endif
 endif
 #####

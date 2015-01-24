@@ -32,9 +32,20 @@ endif
 # Clang flags for all host or target rules
 CLANG_CONFIG_EXTRA_ASFLAGS :=
 CLANG_CONFIG_EXTRA_CFLAGS :=
+ifeq ($(USE_O3_OPTIMIZATIONS),true)
+CLANG_CONFIG_EXTRA_CPPFLAGS := -O3
+else
 CLANG_CONFIG_EXTRA_CPPFLAGS :=
+endif
 CLANG_CONFIG_EXTRA_LDFLAGS :=
 
+ifeq ($(USE_O3_OPTIMIZATIONS),true)
+CLANG_CONFIG_EXTRA_CFLAGS += \
+  -O3
+else
+CLANG_CONFIG_EXTRA_CFLAGS += \
+  -D__compiler_offsetof=__builtin_offsetof
+endif
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -D__compiler_offsetof=__builtin_offsetof
 
