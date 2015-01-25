@@ -1695,6 +1695,12 @@ ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
 endif
 endif
 
+ifeq ($(CMREMIX_CHANGELOG),true)
+# Generate changelog
+	$(hide) ./vendor/cmremix/tools/changelog
+	$(hide) mv $(PRODUCT_OUT)/Changelog.txt $(PRODUCT_OUT)/$(CMREMIX_VERSION)-$(TARGET_PRODUCT).txt
+endif
+
 endif    # recovery_fstab is defined
 endif    # TARGET_NO_KERNEL != true
 endif    # TARGET_DEVICE != generic*
