@@ -15,7 +15,7 @@
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3),$(LOCAL_MODULE))))
   LOCAL_ARM_MODE := $(strip $(LOCAL_ARM_MODE))
-  ifeq ($(LOCAL_FILTER_ARCH_ARM),$(TARGET_$(LOCAL_2ND_ARCH_VAR_PREFIX)ARCH))
+  ifeq (arm,$(TARGET_$(LOCAL_2ND_ARCH_VAR_PREFIX)ARCH))
     arm_objects_mode := $(if $(LOCAL_ARM_MODE),$(LOCAL_ARM_MODE),arm)
     normal_objects_mode := $(if $(LOCAL_ARM_MODE),$(LOCAL_ARM_MODE),thumb)
 
