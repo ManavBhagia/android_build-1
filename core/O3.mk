@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The SaberMod Project
+# Copyright (C) 2014-2015 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,49 +13,17 @@
 # limitations under the License.
 #
 
-LOCAL_DISABLE_O3 := \
-	libziparchive \
-	libziparchive-host \
-	libjni_filtershow_filters \
-	bluetooth.default \
-	libstagefright_webm \
-	libjavacore \
-	net_net_gyp \
-	libwebviewchromium \
-	libwebviewchromium_loader \
-	libwebviewchromium_plat_support \
-	content_content_renderer_gyp \
-	third_party_WebKit_Source_modules_modules_gyp \
-	third_party_WebKit_Source_platform_blink_platform_gyp \
-	third_party_WebKit_Source_core_webcore_remaining_gyp \
-	third_party_angle_src_translator_lib_gyp \
-	third_party_WebKit_Source_core_webcore_generated_gyp
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3),$(LOCAL_MODULE))))
+  ifdef LOCAL_CONLYFLAGS
+    LOCAL_CONLYFLAGS += $(O3_FLAGS)
+  else
+    LOCAL_CONLYFLAGS := $(O3_FLAGS)
+  endif
 
-O3_FLAGS := -O2 \
-	-finline-functions \
-	-funswitch-loops \
-	-fpredictive-commoning \
-	-fgcse-after-reload \
-	-ftree-loop-distribute-patterns \
-	-ftree-slp-vectorize \
-	-fvect-cost-model \
-	-ftree-partial-pre \
-	-fipa-cp-clone \
-	-Wno-unused-parameter \
-	-Wno-unused-but-set-variable \
-	-Wno-maybe-uninitialized
-
-ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3), $(LOCAL_MODULE))))
-ifdef  LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += $(O3_FLAGS)
-else
-LOCAL_CONLYFLAGS := $(O3_FLAGS)
-endif
-
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += $(O3_FLAGS)
-else
-LOCAL_CPPFLAGS := $(O3_FLAGS)
-endif
+  ifdef LOCAL_CPPFLAGS
+    LOCAL_CPPFLAGS += $(O3_FLAGS)
+  else
+    LOCAL_CPPFLAGS := $(O3_FLAGS)
+  endif
 endif
 #####
