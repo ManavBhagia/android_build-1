@@ -19,7 +19,7 @@ LOCAL_DISABLE_PIPE := \
 	bluetooth.default
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_PIPE), $(LOCAL_MODULE))))
-ifndef LOCAL_CONLYFLAGS
+ifdef LOCAL_CONLYFLAGS
 LOCAL_CONLYFLAGS += \
 	-pipe
 else

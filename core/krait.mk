@@ -22,7 +22,7 @@ LOCAL_DISABLE_KRAIT := \
 	libwebviewchromium_plat_support
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_KRAIT), $(LOCAL_MODULE))))
-ifndef LOCAL_CONLYFLAGS
+ifdef LOCAL_CONLYFLAGS
 LOCAL_CONLYFLAGS += -mcpu=cortex-a15 \
 	-mtune=cortex-a15
 else

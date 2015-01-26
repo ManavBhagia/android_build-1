@@ -46,7 +46,7 @@ O3_FLAGS := -O2 \
 	-Wno-maybe-uninitialized
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_O3), $(LOCAL_MODULE))))
-ifndef LOCAL_CONLYFLAGS
+ifdef  LOCAL_CONLYFLAGS
 LOCAL_CONLYFLAGS += $(O3_FLAGS)
 else
 LOCAL_CONLYFLAGS := $(O3_FLAGS)

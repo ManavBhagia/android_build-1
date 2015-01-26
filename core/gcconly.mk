@@ -35,7 +35,7 @@ GCCONLY_FLAGS += -fira-loop-pressure \
 	-mvectorize-with-neon-quad
 
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_GCCONLY), $(LOCAL_MODULE))))
-ifndef LOCAL_CONLYFLAGS
+ifdef LOCAL_CONLYFLAGS
 LOCAL_CONLYFLAGS += $(GCCONLY_FLAGS)
 else
 LOCAL_CONLYFLAGS := $(GCCONLY_FLAGS)
