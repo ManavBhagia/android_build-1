@@ -146,29 +146,6 @@ endif
 endif
 endif
 
-# Start with some common modules and build flags that fix ROM compilation.
-LOCAL_COMMON_MODULES := \
-	libstagefright \
-	libstagefright_amrwbenc
-
-ifeq (1,$(words $(filter $(LOCAL_COMMON_MODULES),$(LOCAL_MODULE))))
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	-Wno-error=maybe-uninitialized
-else
-LOCAL_CONLYFLAGS := \
-	-Wno-error=maybe-uninitialized
-endif
-
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	-Wno-error=maybe-uninitialized
-else
-LOCAL_CPPFLAGS := \
-	-Wno-error=maybe-uninitialized
-endif
-endif
-
 # Perform various ClooG and ISL loop tranformations
 ifeq ($(GRAPHITE_OPTIMIZATIONS),true)
 ifndef LOCAL_IS_HOST_MODULE
