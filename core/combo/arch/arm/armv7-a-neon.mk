@@ -31,3 +31,17 @@ endif
 endif
 endif
 endif
+
+arch_variant_cflags += \
+    -mfloat-abi=softfp \
+    -mfpu=neon
+
+# Export cflags to the kernel.
+# Use neon-vfpv4 for krait.
+ifeq (,$(filter krait,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
+export kernel_arch_variant_cflags := $(arch_variant_cflags)
+else
+export TARGET_CPU_VARIANT := krait
+export kernel_arch_variant_cflags := $(arch_variant_cflags) -mfpu=neon-vfpv4
+endif
+
