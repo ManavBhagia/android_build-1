@@ -124,7 +124,7 @@ ifeq ($(STRICT_ALIASING),true)
 include $(BUILD_SYSTEM)/strict.mk
 endif
 
-ifeq ($(ENABLE_MODULAR_O3),true)
+ifeq ($(O3_OPTIMIZATIONS),true)
 ifndef LOCAL_IS_HOST_MODULE
 ifeq ($(LOCAL_CLANG),)
 include $(BUILD_SYSTEM)/O3.mk

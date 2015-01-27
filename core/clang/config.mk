@@ -31,7 +31,7 @@ endif
 
 # Clang flags for all host or target rules
 CLANG_CONFIG_EXTRA_ASFLAGS :=
-ifeq ($(USE_O3_OPTIMIZATIONS),true)
+ifeq ($(O3_OPTIMIZATIONS),true)
 CLANG_CONFIG_EXTRA_CFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option
 CLANG_CONFIG_EXTRA_CPPFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof
 else
