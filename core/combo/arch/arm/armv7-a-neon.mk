@@ -36,12 +36,15 @@ arch_variant_cflags += \
     -mfloat-abi=softfp \
     -mfpu=neon
 
-# Export cflags to the kernel.
-# Use neon-vfpv4 for krait.
-ifeq (,$(filter krait,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
-export kernel_arch_variant_cflags := $(arch_variant_cflags)
-else
-export TARGET_CPU_VARIANT := krait
-export kernel_arch_variant_cflags := $(arch_variant_cflags) -mfpu=neon-vfpv4
+# For krait override -mfpu=neon with -mfpu=neon-vfpv4
+# Have the clang compiler ignore unknow flag option -mfpu=neon-vfpv4
+# Thanks to Cl3Kener for finding this annoying issue!
+# Once ignored by clang, clang will default back to -mfpu=neon
+ifeq (krait,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT))
+arch_variant_cflags += \
+    -mfpu=neon-vfpv4
 endif
+
+# Export cflags to the kernel.
+export kernel_arch_variant_cflags := $(arch_variant_cflags)
 
