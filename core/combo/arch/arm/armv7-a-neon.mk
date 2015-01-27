@@ -8,9 +8,7 @@ ARCH_ARM_HAVE_NEON              := true
 
 CORTEX_A15_TYPE := \
 	cortex-a15 \
-	krait
-
-ARCH_ARMV8_A_TYPE := \
+	krait \
 	denver
 
 ifneq (,$(filter $(CORTEX_A15_TYPE),$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
@@ -21,12 +19,6 @@ ifneq (,$(filter $(CORTEX_A15_TYPE),$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT
 	# Fake ARM compiler flags as these processors support LPAE and VFP4 which GCC/clang
 	# doesn't advertise.
 	arch_variant_cflags += -D__ARM_FEATURE_LPAE=1 -D__ARM_FEATURE_VFP4=1
-else
-ifeq ($(filter $(ARCH_ARMV8_A_TYPE),$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),)
-	arch_variant_cflags := -march=armv8-a
-# Fake an ARM compiler flag as these processors support LPAE which GCC/clang
-	# don't advertise.
-	arch_variant_cflags += -D__ARM_FEATURE_LPAE=1
 else
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a9)
 	arch_variant_cflags := -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=softfp
@@ -43,7 +35,6 @@ endif
 endif
 endif
 endif
-endif
 
 arch_variant_cflags += \
     -mfloat-abi=softfp \
@@ -53,11 +44,10 @@ arch_variant_cflags += \
 # Have the clang compiler ignore unknow flag option -mfpu=neon-vfpv4
 # Thanks to Cl3Kener for finding this annoying issue!
 # Once ignored by clang, clang will default back to -mfpu=neon
-ifneq ($(filter (ARCH_ARMV8_A_TYPE)$(CORTEX_A15_TYPE),$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),)
+ifneq ($(filter $(CORTEX_A15_TYPE),$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),)
 arch_variant_cflags += \
     -mfpu=neon-vfpv4
 endif
 
 # Export cflags and cpu variant to the kernel.
 export kernel_arch_variant_cflags := $(arch_variant_cflags)
-export TARGET_CPU_VARIANT := $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)
