@@ -139,6 +139,11 @@ $(info   FLOOP_NEST_OPTIMIZE=$(FLOOP_NEST_OPTIMIZE))
 else
 $(info   FLOOP_NEST_OPTIMIZE=No)
 endif
+ifdef GNU11_OPTIMIZATIONS
+$(info   GNU11_OPTIMIZATIONS=$(LOCAL_LTO))
+else
+$(info   GNU11_OPTIMIZATIONS=No)
+endif
 $(info ============================================)
 $(info ============================================)
 $(info   GCC_VERSION_ROM=$(TARGET_GCC_VERSION_AND))

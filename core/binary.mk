@@ -113,17 +113,30 @@ endif
 #
 # Include custom gcc flags.  Seperate them so they can be easily managed.
 ifeq ($(LOCAL_LTO),true)
+ifndef LOCAL_IS_HOST_MODULE
+ifeq ($(LOCAL_CLANG),)
 include $(BUILD_SYSTEM)/lto.mk
 endif
+endif
+endif
 
+
+### GNU11
+ifeq ($(strip $(GNU11_OPTIMIZATIONS)),true)
+  include $(BUILD_SYSTEM)/gnu11.mk
+endif
+
+### PIPE
 ifeq ($(TARGET_USE_PIPE),true)
 include $(BUILD_SYSTEM)/pipe.mk
 endif
 
+### Strict Aliasing
 ifeq ($(STRICT_ALIASING),true)
 include $(BUILD_SYSTEM)/strict.mk
 endif
 
+### -O3
 ifeq ($(O3_OPTIMIZATIONS),true)
 ifndef LOCAL_IS_HOST_MODULE
 ifeq ($(LOCAL_CLANG),)
@@ -132,12 +145,14 @@ endif
 endif
 endif
 
+### Krait
 ifeq ($(KRAIT_TUNINGS),true)
 ifndef LOCAL_IS_HOST_MODULE
 include $(BUILD_SYSTEM)/krait.mk
 endif
 endif
 
+### GCC
 ifeq ($(ENABLE_GCCONLY),true)
 ifndef LOCAL_IS_HOST_MODULE
 ifeq ($(LOCAL_CLANG),)
@@ -146,7 +161,7 @@ endif
 endif
 endif
 
-# Perform various ClooG and ISL loop tranformations
+## Perform various ClooG and ISL loop tranformations
 ifeq ($(GRAPHITE_OPTIMIZATIONS),true)
 ifndef LOCAL_IS_HOST_MODULE
 ifndef LOCAL_CLANG
