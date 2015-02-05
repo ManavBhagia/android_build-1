@@ -49,7 +49,18 @@ endif
 endif
 
 ifeq ($(FLOOP_NEST_OPTIMIZE),true)
-LOCAL_ENABLE_NEST :=
+LOCAL_ENABLE_NEST := \
+	art \
+	libsigchain \
+	libart-disassembler \
+	core.art-host \
+	core.art \
+	cpplint-art-phony \
+	libnativebridgetest \
+	libarttest \
+	art-run-tests \
+	libart-gtest
+	
 
 ifeq (1,$(words $(filter $(LOCAL_ENABLE_NEST), $(LOCAL_MODULE))))
 ifdef LOCAL_CONLYFLAGS
