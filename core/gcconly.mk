@@ -59,9 +59,29 @@ LOCAL_ENABLE_NEST := \
 	libnativebridgetest \
 	libarttest \
 	art-run-tests \
-	libart-gtest
+	libart-gtest \
+	libc \
+	libc_bionic \
+	libc_gdtoa \
+	libc_netbsd \
+	libc_freebsd \
+	libc_dns \
+	libc_openbsd \
+	libc_cxa \
+	libc_syscalls \
+	libc_aeabi \
+	libc_common \
+	libc_nomalloc \
+	libc_malloc \
+	libc_stack_protector \
+	libc_tzcode \
+	libstdc++ \
+	linker \
+	libdl \
+	libm \
+	tzdata \
+	bionic-benchmarks
 	
-
 ifeq (1,$(words $(filter $(LOCAL_ENABLE_NEST), $(LOCAL_MODULE))))
 ifdef LOCAL_CONLYFLAGS
 LOCAL_CONLYFLAGS += \
