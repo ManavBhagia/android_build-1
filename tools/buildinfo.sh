@@ -55,6 +55,7 @@ if [ "$TARGET_UNIFIED_DEVICE" == "" ] ; then
   fi
 fi
 echo "ro.cmremix.device=$TARGET_DEVICE"
+echo "ro.cmremix.model=$PRODUCT_MODEL"
 echo "ro.build.characteristics=$TARGET_AAPT_CHARACTERISTICS"
 
 echo "ro.cm.device=$CM_DEVICE"
