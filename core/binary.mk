@@ -111,7 +111,16 @@ endif
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 # Include custom gcc flags.  Seperate them so they can be easily managed.
+
+# arm thumb
+ifeq ($(strip $(ENABLE_ARM_THUMB_INTERWORK)),true)
+  ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
+    include $(BUILD_SYSTEM)/thumb_interwork.mk
+  endif
+endif
+
 ifeq ($(LOCAL_LTO),true)
 ifndef LOCAL_IS_HOST_MODULE
 ifeq ($(LOCAL_CLANG),)
