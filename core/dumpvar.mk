@@ -99,6 +99,11 @@ $(info   O3_OPTIMIZATIONS=$(O3_OPTIMIZATIONS))
 else
 $(info   O3_OPTIMIZATIONS=No)
 endif
+ifdef ENABLE_PTHREAD
+$(info   ENABLE_PTHREAD=$(ENABLE_PTHREAD))
+else
+$(info   ENABLE_PTHREAD=No)
+endif
 ifdef USE_HOST_4_8
 $(info   USE_HOST_4_8=$(USE_HOST_4_8))
 else
