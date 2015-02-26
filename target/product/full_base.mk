@@ -23,6 +23,9 @@ PRODUCT_PACKAGES := \
     libfwdlockengine \
     WAPPushManager
 
+PRODUCT_PACKAGES += \
+    LiveWallpapersPicker
+
 # Additional settings used in all AOSP builds
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.com.android.dateformat=MM-dd-yyyy
@@ -35,9 +38,6 @@ PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
 
 # Get some sounds
 $(call inherit-product-if-exists, frameworks/base/data/sounds/AudioPackage13_48.mk)
-
-# Get the TTS language packs
-$(call inherit-product-if-exists, external/svox/pico/lang/all_pico_languages.mk)
 
 # Get a list of languages.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/locales_full.mk)
