@@ -35,7 +35,8 @@ CLANG_CONFIG_arm_UNKNOWN_CFLAGS := \
   -fvect-cost-model \
   -ftree-partial-pre \
   -fipa-cp-clone \
-  -mvectorize-with-neon-quad
+  -mvectorize-with-neon-quad \
+  -fno-if-conversion
 
 define subst-clang-incompatible-arm-flags
   $(subst -march=armv5te,-march=armv5t,\
@@ -43,4 +44,19 @@ define subst-clang-incompatible-arm-flags
   $(subst -mfpu=neon-vfpv3,-mfpu=neon,\
   $(subst -mfpu=neon-vfpv4,-mfpu=neon,\
   $(1)))))
+endef
+
+
+#CLANG QCOM
+define subst-clang-qcom-incompatible-arm-flags
+  $(subst -march=armv5te,-mcpu=krait2,\
+  $(subst -march=armv5e,-mcpu=krait2,\
+  $(subst -march=armv7,-mcpu=krait2,\
+  $(subst -march=armv7-a,-mcpu=krait2,\
+  $(subst -mcpu=cortex-a15,-mcpu=krait2,\
+  $(subst -mfpu=cortex-a8,-mcpu=scorpion,\
+  $(subst -mfpu=neon-vfpv3,-mfpu=neon,\
+  $(subst -mfpu=neon-vfpv4,-mfpu=neon,\
+  $(subst -O3,-Ofast,\
+  $(1))))))))))
 endef

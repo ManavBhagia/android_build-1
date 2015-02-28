@@ -84,6 +84,10 @@ $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS :=  -mthumb \
                         -fomit-frame-pointer \
                         -fno-strict-aliasing
 
+ifeq ($(USE_CLANG_QCOM),true)
+$(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -marm 
+endif
+
 # Set FORCE_ARM_DEBUGGING to "true" in your buildspec.mk
 # or in your environment to force a full arm build, even for
 # files that are normally built as thumb; this can make

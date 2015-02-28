@@ -24,18 +24,18 @@ LOCAL_DISABLE_KRAIT := \
 ifneq (1,$(words $(filter $(LOCAL_DISABLE_KRAIT), $(LOCAL_MODULE))))
 ifdef LOCAL_CONLYFLAGS
 LOCAL_CONLYFLAGS += -mcpu=cortex-a15 \
-	-mtune=cortex-a15 $(BOARD_GLOBAL_CFLAGS)
+	-mfpu=neon-vfpv4 -mvectorize-with-neon-quad $(BOARD_GLOBAL_CFLAGS)
 else
 LOCAL_CONLYFLAGS := -mcpu=cortex-a15 \
-	-mtune=cortex-a15 $(BOARD_GLOBAL_CFLAGS)
+	-mfpu=neon-vfpv4 -mvectorize-with-neon-quad $(BOARD_GLOBAL_CFLAGS)
 endif
 
 ifdef LOCAL_CPPFLAGS
 LOCAL_CPPFLAGS += -mcpu=cortex-a15 \
-	-mtune=cortex-a15 $(BOARD_GLOBAL_CFLAGS)
+	-mfpu=neon-vfpv4 -mvectorize-with-neon-quad $(BOARD_GLOBAL_CFLAGS)
 else
 LOCAL_CPPFLAGS := -mcpu=cortex-a15 \
-	-mtune=cortex-a15 $(BOARD_GLOBAL_CFLAGS)
+	-mfpu=neon-vfpv4 -mvectorize-with-neon-quad $(BOARD_GLOBAL_CFLAGS)
 endif
 endif
 #####
