@@ -37,7 +37,7 @@ PRODUCT_PACKAGES += \
     KeyChain \
     Keyguard \
     LatinIME \
-    Launcher3 \
+    SlimLauncher \
     ManagedProvisioning \
     PacProcessor \
     libpac \
