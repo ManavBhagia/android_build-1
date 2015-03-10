@@ -57,6 +57,6 @@ define subst-clang-qcom-incompatible-arm-flags
   $(subst -mfpu=cortex-a8,-mcpu=scorpion,\
   $(subst -mfpu=neon-vfpv3,-mfpu=neon,\
   $(subst -mfpu=neon-vfpv4,-mfpu=neon,\
-  $(subst -O3,-Ofast,\
+  $(subst -O3,-Ofast -fno-fast-math,\
   $(1))))))))))
 endef

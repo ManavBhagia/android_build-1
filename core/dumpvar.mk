@@ -99,6 +99,11 @@ $(info   USE_CLANG_QCOM=$(USE_CLANG_QCOM))
 else
 $(info   USE_CLANG_QCOM=No)
 endif
+ifdef USE_CLANG_QCOM_LTO
+$(info   USE_CLANG_QCOM_LTO=$(USE_CLANG_QCOM_LTO))
+else
+$(info   USE_CLANG_QCOM_LTO=No)
+endif
 ifdef O3_OPTIMIZATIONS
 $(info   O3_OPTIMIZATIONS=$(O3_OPTIMIZATIONS))
 else
@@ -133,11 +138,6 @@ ifdef ENABLE_GCCONLY
 $(info   ENABLE_GCCONLY=$(ENABLE_GCCONLY))
 else
 $(info   ENABLE_GCCONLY=No)
-endif
-ifdef LOCAL_LTO
-$(info   LOCAL_LTO=$(LOCAL_LTO))
-else
-$(info   LOCAL_LTO=No)
 endif
 ifdef TARGET_USE_PIPE
 $(info   TARGET_USE_PIPE=$(TARGET_USE_PIPE))

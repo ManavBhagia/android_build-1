@@ -179,16 +179,6 @@ $(combo_2nd_arch_prefix)TARGET_LIBATOMIC := $(shell $($(combo_2nd_arch_prefix)TA
         $($(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS) -print-file-name=libatomic.a)
 endif
 
-# Define LTO (Link-Time Optimization) options.
-$(combo_2nd_arch_prefix)TARGET_LTO_CFLAGS :=
-$(combo_2nd_arch_prefix)TARGET_LTO_LDFLAGS :=
-ifneq ($(DEBUG_DISABLE_LTO),true)
-$(combo_2nd_arch_prefix)TARGET_LTO_CFLAGS += -flto -fno-toplevel-reorder -fuse-linker-plugin -D__LTO__
-## HACK: DISABLE FORTIFY SOURCE WHEN USING LTO?
-#$(combo_2nd_arch_prefix)TARGET_LTO_CFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0
-$(combo_2nd_arch_prefix)TARGET_LTO_LDFLAGS += $($(combo_2nd_arch_prefix)TARGET_LTO_CFLAGS) -Wl,-flto
-endif
-
 KERNEL_HEADERS_COMMON := $(libc_root)/kernel/uapi
 KERNEL_HEADERS_ARCH   := $(libc_root)/kernel/uapi/asm-$(TARGET_$(combo_2nd_arch_prefix)ARCH)
 KERNEL_HEADERS := $(KERNEL_HEADERS_COMMON) $(KERNEL_HEADERS_ARCH)

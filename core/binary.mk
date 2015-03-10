@@ -118,15 +118,6 @@ ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
   include $(BUILD_SYSTEM)/thumb_interwork.mk
 endif
 
-ifeq ($(LOCAL_LTO),true)
-ifndef LOCAL_IS_HOST_MODULE
-ifeq ($(LOCAL_CLANG),)
-include $(BUILD_SYSTEM)/lto.mk
-endif
-endif
-endif
-
-
 ### GNU11
 ifeq ($(strip $(GNU11_OPTIMIZATIONS)),true)
   include $(BUILD_SYSTEM)/gnu11.mk
@@ -169,13 +160,27 @@ endif
 endif
 endif
 
-#force use CLANG_QCOM for selected MODULES
+## force use CLANG_QCOM for selected MODULES
 ifeq ($(USE_CLANG_QCOM),true)
   ifndef LOCAL_IS_HOST_MODULE
     ifeq ($(LOCAL_MODULE),$(filter $(LOCAL_MODULE),$(CLANG_QCOM_MODULES)))
       LOCAL_CLANG := true
     endif
   endif
+endif
+
+## LTO flags if LTO is turned on/supported
+ifeq ($(USE_CLANG_QCOM_LTO),true)
+  ifneq ($(strip $(LOCAL_CLANG)),true)
+    ifeq ($(strip $(LOCAL_IS_HOST_MODULE)),)
+      ifneq (1,$(words $(filter $(LOCAL_DISABLE_CLANG_QCOM_LTO_MODULES), $(LOCAL_MODULE))))
+      my_cflags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_CFLAGS)
+      my_cfpplags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_CFLAGS)
+      my_ldflags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_LDFLAGS)
+      include $(BUILD_SYSTEM)/lto.mk
+   endif
+  endif
+ endif
 endif
 
 ## Perform various ClooG and ISL loop tranformations

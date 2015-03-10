@@ -31,8 +31,11 @@ CLANG_QCOM_CONFIG_arm_TARGET_TOOLCHAIN_PREFIX := \
   $(TARGET_TOOLCHAIN_ROOT)/arm-linux-androideabi/bin
 
 CLANG_QCOM_CONFIG_EXTRA_LLVM_FLAGS := \
+  -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof \
+  -Wno-tautological-constant-out-of-range-compare \
   -fcolor-diagnostics \
   -fstrict-aliasing \
+  -Wstrict-aliasing=3 \
   -fuse-ld=gold
   #-Wno-unused-parameter -Wno-unused-variable -Wunused-but-set-variable
 
@@ -47,17 +50,19 @@ else
 endif
 
 
-#see documentation especialy 3.4.21 Math optimization. I hope we dont need that precision in Bionic although we likely will
+#see documentation especialy 3.4.21 Math optimization.
 CLANG_QCOM_CONFIG_EXTRA_KRAIT_FLAGS := \
-  -Ofast $(mcpu_clang_qcom) -mfpu=neon -mfloat-abi=softfp \
+  -Ofast $(mcpu_clang_qcom) -mfpu=neon  -mfloat-abi=softfp -fvectorize-loops \
+  -fno-fast-math \
   -fomit-frame-pointer \
-  -ffast-math -ffinite-math-only \
-  -fno-signed-zeros -fno-trapping-math \
-  -fassociative-math \
-  -freciprocal-math \
-  -funsafe-math-optimizations \
-  -mllvm -arm-opt-memcpy -arm-expand-memcpy-runtime
-  
+  -ffinite-math-only \
+  -ffunction-sections \
+  -foptimize-sibling-calls \
+  -fmerge-functions \
+  -fvectorize-loops \
+  -funsafe-math-optimizations
+  #-falign-os -falign-functions -falign-labels -falign-loops
+
 
 #TODO:
 #-fparallel where to use? see 3.6.4

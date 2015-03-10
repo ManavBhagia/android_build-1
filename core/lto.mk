@@ -13,16 +13,16 @@
 # limitations under the License.
 #
 
-ifneq (1,$(words $(filter $(LOCAL_NO_LTO_SUPPORT), $(LOCAL_MODULE))))
-my_cflags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_CFLAGS)
-my_cppflags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_CFLAGS)
-my_ldflags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_LDFLAGS)
-endif
+# Linnk Times Optimization Flags
+$(combo_2nd_arch_prefix)TARGET_LTO_CFLAGS += -flto -flto-report -fuse-ld=gold -fno-toplevel-reorder -fuse-linker-plugin -D__LTO__
+$(combo_2nd_arch_prefix)TARGET_LTO_CFPPLAGS += -flto -flto-report -fuse-ld=gold -fno-toplevel-reorder -fuse-linker-plugin -D__LTO__
+$(combo_2nd_arch_prefix)TARGET_LTO_LDFLAGS += $($(combo_2nd_arch_prefix)TARGET_LTO_CFLAGS) -Wl,-flto
 
 # Force disable some modules that are not compatible with LTO flags
-LOCAL_NO_LTO_SUPPORT := \
-             libdl \
-             init \
-             libjemalloc
+LOCAL_DISABLE_CLANG_QCOM_LTO_MODULES := \
+                                libdl \
+                                init \
+                                libjemalloc
+
 
 ###
