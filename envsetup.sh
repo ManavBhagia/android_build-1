@@ -43,6 +43,9 @@ EOF
     echo $A
 }
 
+# Load ANSI color palette
+. ./vendor/cmremix/tools/colors
+
 # Get the value of a build variable as an absolute path.
 function get_abs_build_var()
 {
@@ -2375,19 +2378,29 @@ function make()
     local secs=$(($tdiff % 60))
     echo
     if [ $ret -eq 0 ] ; then
-        echo -n -e "#### make completed successfully "
+        echo -n -e "${bldwhi}#### ${bldgrn}make completed successfully${rst} "
     else
-        echo -n -e "#### make failed to build some targets "
+        echo -n -e "${bldwhi}#### ${bldred}make failed to build some targets${rst} "
     fi
     if [ $hours -gt 0 ] ; then
-        printf "(%02g:%02g:%02g (hh:mm:ss))" $hours $mins $secs
+        printf "${bldcya}(%02g:%02g:%02g (hh:mm:ss))${rst}" $hours $mins $secs
     elif [ $mins -gt 0 ] ; then
-        printf "(%02g:%02g (mm:ss))" $mins $secs
+        printf "${bldcya}(%02g:%02g (mm:ss))${rst}" $mins $secs
     elif [ $secs -gt 0 ] ; then
-        printf "(%s seconds)" $secs
+        printf "${bldcya}(%s seconds)${rst}" $secs
     fi
-    echo -e " ####"
+    echo -e " ${bldwhi}####${rst}"
     echo
+    if [ $ret -eq 0 ] ; then
+        for i in "$@"; do
+            case $i in
+                bacon|bootimage|otapackage|recoveryimage|systemimage)
+                    . ./vendor/cmremix/tools/res/cmremix
+                    ;;
+                *)
+            esac
+        done
+    fi
     return $ret
 }
 
@@ -2396,19 +2409,16 @@ function chromium_prebuilt() {
     export TARGET_DEVICE=$(get_build_var TARGET_DEVICE)
     hash=$T/prebuilts/chromium/$TARGET_DEVICE/hash.txt
 
-    # Colors
-    txtbld=$(tput bold)
-    bldblu=${txtbld}$(tput setaf 4)
-    bldgrn=${txtbld}$(tput setaf 2)
-
     if [ -r $hash ] && [ $(git --git-dir=$T/external/chromium_org/.git --work-tree=$T/external/chromium_org rev-parse --verify HEAD) == $(cat $hash) ] && [ -f $libsCheck ] && [ -d $appCheck ]; then
         export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=yes
-        echo -e ${bldblu}"Prebuilt Chromium is up-to-date: ${bldgrn}Will be used for build"${txtrst}
-        echo -e ""
+        echo -e "${bldcya}Prebuilt Chromium is up-to-date: ${bldgrn}Will be used for build${rst}"
     else
         export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=no
-        echo -e ${bldblu}"Prebuilt Chromium out-of-date or not found: ${bldgrn}Will build from source"${txtrst}
-        echo -e ""
+        if [ -f $hash ]; then
+            echo -e "${bldcya}Prebuilt Chromium out-of-date: ${bldylw}Will build from source${rst}"
+        else
+            echo -e "${bldcya}Prebuilt Chromium not found: ${bldred}Will build from source${rst}"
+        fi
     fi
 }
 
