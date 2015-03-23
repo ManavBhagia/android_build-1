@@ -19,10 +19,10 @@ $(combo_2nd_arch_prefix)TARGET_LTO_CFPPLAGS += -flto -flto-report -fuse-ld=gold 
 $(combo_2nd_arch_prefix)TARGET_LTO_LDFLAGS += $($(combo_2nd_arch_prefix)TARGET_LTO_CFLAGS) -Wl,-flto
 
 # Force disable some modules that are not compatible with LTO flags
-LOCAL_DISABLE_CLANG_QCOM_LTO_MODULES := \
-                                libdl \
-                                init \
-                                libjemalloc
+LOCAL_DISABLE_LTO_MODULES := \
+                   libdl \
+                   init \
+                   libjemalloc
 
 
 ###

@@ -104,6 +104,11 @@ $(info   USE_CLANG_QCOM_LTO=$(USE_CLANG_QCOM_LTO))
 else
 $(info   USE_CLANG_QCOM_LTO=No)
 endif
+ifdef LTO_OPTIMIZATION
+$(info   LTO_OPTIMIZATION=$(LTO_OPTIMIZATION))
+else
+$(info   LTO_OPTIMIZATION=No)
+endif
 ifdef O3_OPTIMIZATIONS
 $(info   O3_OPTIMIZATIONS=$(O3_OPTIMIZATIONS))
 else
@@ -149,11 +154,6 @@ $(info   FLOOP_NEST_OPTIMIZE=$(FLOOP_NEST_OPTIMIZE))
 else
 $(info   FLOOP_NEST_OPTIMIZE=No)
 endif
-ifdef GNU11_OPTIMIZATIONS
-$(info   GNU11_OPTIMIZATIONS=$(GNU11_OPTIMIZATIONS))
-else
-$(info   GNU11_OPTIMIZATIONS=No)
-endif
 ifdef CMREMIX_OPTIMIZATIONS
 $(info   CMREMIX_OPTIMIZATIONS=$(CMREMIX_OPTIMIZATIONS))
 else
@@ -161,11 +161,11 @@ $(info   CMREMIX_OPTIMIZATIONS=No)
 endif
 $(info ============================================)
 $(info ============================================)
-$(info   GCC_VERSION_ROM=$(TARGET_GCC_VERSION_AND))
+$(info   GCC_VERSION_ROM=$(TARGET_SM_AND))
 ifneq ($(SM_AND_VERSION),)
 $(info   GCC_VERSION_ROM_VARIANT=$(SM_AND_VERSION))
 endif
-$(info   GCC_VERSION_KERNEL=$(TARGET_GCC_VERSION_ARM))
+$(info   GCC_VERSION_KERNEL=$(TARGET_SM_KERNEL))
 ifneq ($(SM_KERNEL_VERSION),)
 $(info   GCC_VERSION_KERNEL_VARIANT=$(SM_KERNEL_VERSION))
 endif

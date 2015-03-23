@@ -118,11 +118,6 @@ ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
   include $(BUILD_SYSTEM)/thumb_interwork.mk
 endif
 
-### GNU11
-ifeq ($(strip $(GNU11_OPTIMIZATIONS)),true)
-  include $(BUILD_SYSTEM)/gnu11.mk
-endif
-
 ### PIPE
 ifeq ($(TARGET_USE_PIPE),true)
 include $(BUILD_SYSTEM)/pipe.mk
@@ -170,10 +165,10 @@ ifeq ($(USE_CLANG_QCOM),true)
 endif
 
 ## LTO flags if LTO is turned on/supported
-ifeq ($(USE_CLANG_QCOM_LTO),true)
+ifeq ($(LTO_OPTIMIZATION),true)
   ifneq ($(strip $(LOCAL_CLANG)),true)
     ifeq ($(strip $(LOCAL_IS_HOST_MODULE)),)
-      ifneq (1,$(words $(filter $(LOCAL_DISABLE_CLANG_QCOM_LTO_MODULES), $(LOCAL_MODULE))))
+      ifneq (1,$(words $(filter $(LOCAL_DISABLE_LTO_MODULES), $(LOCAL_MODULE))))
       my_cflags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_CFLAGS)
       my_cfpplags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_CFLAGS)
       my_ldflags += $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_LTO_LDFLAGS)
