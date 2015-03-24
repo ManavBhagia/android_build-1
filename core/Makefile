@@ -888,6 +888,11 @@ else
         build/target/product/security/cm-devkey
 endif
 
+# ArchiDroid
+ifeq ($(CMREMIX_OPTIMIZATIONS),true)
+include $(BUILD_SYSTEM)/cmremix.mk
+endif
+
 # Generate a file containing the keys that will be read by the
 # recovery binary.
 RECOVERY_INSTALL_OTA_KEYS := \
@@ -949,7 +954,9 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(recovery_ramdisk) \
 ifeq (true,$(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_SUPPORTS_VERITY))
 	$(BOOT_SIGNER) /recovery $@ $(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_VERITY_SIGNING_KEY) $@
 endif
+ifneq ($(CMREMIX_IGNORE_RECOVERY_SIZE),true)
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE))
+endif
 	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
 
 endif # BOARD_CUSTOM_BOOTIMG_MK

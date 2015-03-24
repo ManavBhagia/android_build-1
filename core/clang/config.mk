@@ -40,6 +40,17 @@ CLANG_CONFIG_EXTRA_CPPFLAGS :=
 endif
 CLANG_CONFIG_EXTRA_LDFLAGS :=
 
+# ArchiDroid
+ifeq ($(CMREMIX_OPTIMIZATIONS),true)
+include $(BUILD_SYSTEM)/cmremix.mk
+CLANG_CONFIG_EXTRA_CFLAGS += $(CMREMIX_CLANG_CFLAGS)
+CLANG_CONFIG_EXTRA_CPPFLAGS += $(CMREMIX_CLANG_CPPFLAGS)
+CLANG_CONFIG_EXTRA_LDFLAGS += $(CMREMIX_CLANG_LDFLAGS)
+
+CLANG_CONFIG_EXTRA_CFLAGS += \
+  -D__compiler_offsetof=__builtin_offsetof
+endif
+
 # Help catch common 32/64-bit errors.
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -Werror=int-conversion
@@ -50,6 +61,7 @@ CLANG_CONFIG_EXTRA_CFLAGS += \
   -Wno-unused-command-line-argument
 
 CLANG_CONFIG_UNKNOWN_CFLAGS := \
+  $(CMREMIX_CLANG_UNKNOWN_FLAGS) \
   -funswitch-loops \
   -fno-tree-sra \
   -finline-limit=64 \

@@ -150,9 +150,14 @@ else
 $(info   FLOOP_NEST_OPTIMIZE=No)
 endif
 ifdef GNU11_OPTIMIZATIONS
-$(info   GNU11_OPTIMIZATIONS=$(LOCAL_LTO))
+$(info   GNU11_OPTIMIZATIONS=$(GNU11_OPTIMIZATIONS))
 else
 $(info   GNU11_OPTIMIZATIONS=No)
+endif
+ifdef CMREMIX_OPTIMIZATIONS
+$(info   CMREMIX_OPTIMIZATIONS=$(CMREMIX_OPTIMIZATIONS))
+else
+$(info   CMREMIX_OPTIMIZATIONS=No)
 endif
 $(info ============================================)
 $(info ============================================)

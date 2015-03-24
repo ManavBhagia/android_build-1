@@ -73,19 +73,30 @@ $(combo_2nd_arch_prefix)TARGET_STRIP := $($(combo_2nd_arch_prefix)TARGET_TOOLS_P
 
 $(combo_2nd_arch_prefix)TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
-$(combo_2nd_arch_prefix)TARGET_arm_CFLAGS :=    -O2 \
+# ArchiDroid
+ifeq ($(CMREMIX_OPTIMIZATIONS),true)
+include $(BUILD_SYSTEM)/cmremix.mk
+endif
+
+$(combo_2nd_arch_prefix)TARGET_arm_CFLAGS :=    $(CMREMIX_GCC_CFLAGS_ARM) \
                         -fomit-frame-pointer \
                         -fstrict-aliasing    \
                         -funswitch-loops
 
 # Modules can choose to compile some source as thumb.
 $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS :=  -mthumb \
-                        -Os \
+                        $(CMREMIX_GCC_CFLAGS_THUMB) \
                         -fomit-frame-pointer \
                         -fno-strict-aliasing
 
 ifeq ($(USE_CLANG_QCOM),true)
 $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -marm 
+endif
+
+ifeq ($(CMREMIX_OPTIMIZATIONS),true)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += $(CMREMIX_GCC_CFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += $(CMREMIX_GCC_CPPFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += $(CMREMIX_GCC_LDFLAGS)
 endif
 
 # Set FORCE_ARM_DEBUGGING to "true" in your buildspec.mk
@@ -149,6 +160,10 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += \
 			-Wl,--fatal-warnings \
 			-Wl,--icf=safe \
 			$(arch_variant_ldflags)
+
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += $(BOARD_GLOBAL_CFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += $(BOARD_GLOBAL_CPPFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += $(BOARD_GLOBAL_LDFLAGS)
 
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -mthumb-interwork
 
