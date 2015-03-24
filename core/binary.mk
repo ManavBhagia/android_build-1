@@ -190,6 +190,18 @@ ifeq ($(GRAPHITE_OPTIMIZATIONS),true)
  endif
 endif
 
+# General flags for gcc 4.9 to allow compilation to complete.
+# Many of these are device specific and should be set in device make files.
+# See vendor or device trees for more info.  Add more sections below and to vendor/name/configs/sm.mk if need be.
+
+# modules that need -Wno-error=maybe-uninitialized
+ifeq (1,$(words $(filter $(MAYBE_UNINITIALIZED),$(LOCAL_MODULE))))
+  ifdef LOCAL_CFLAGS
+    LOCAL_CFLAGS += -Wno-error=maybe-uninitialized
+  else
+    LOCAL_CFLAGS := -Wno-error=maybe-uninitialized
+  endif
+endif
 
 #end SaberMod
 
