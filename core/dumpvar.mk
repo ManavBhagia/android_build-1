@@ -87,8 +87,9 @@ $(info   CYNGN_FEATURES=$(CYNGN_FEATURES))
 endif
 $(info ============================================)
 $(info ============================================)
-$(info   TARGET_GCC_VERSION=$(TARGET_GCC_VERSION))
+$(info   CMREMIX_VERSION=$(CMREMIX_BUILD_VERSION))
 $(info   TARGET_NDK_GCC_VERSION=$(TARGET_NDK_GCC_VERSION))
+$(info   TARGET_GCC_VERSION=$(TARGET_GCC_VERSION))
 ifdef TARGET_GCC_VERSION_ARM
 $(info   TARGET_KERNEL_TOOLCHAIN=$(TARGET_GCC_VERSION_ARM))
 else
