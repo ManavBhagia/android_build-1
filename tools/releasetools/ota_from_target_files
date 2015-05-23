@@ -731,6 +731,11 @@ run_program("/sbin/sh", "-c", "chmod -R 775 /data/UKM");""")
   if OPTIONS.extra_script is not None:
     script.AppendExtra(OPTIONS.extra_script)
 
+  # SuperSU leave /system unmounted while we need it mounted here to avoid
+  # a warning from non-Multirom TWRP
+  if block_based:
+    script.Mount("/system")
+
   script.UnmountAll()
 
   if OPTIONS.wipe_user_data:
