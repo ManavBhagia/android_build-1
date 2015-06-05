@@ -189,6 +189,10 @@ ifneq ($(strip $(O3_OPTIMIZATIONS)),true)
   TARGET_RELEASE_CFLAGS += -O2 -g
 endif
 
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += $(BOARD_GLOBAL_CFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += $(BOARD_GLOBAL_CPPFLAGS)
+$(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += $(BOARD_GLOBAL_LDFLAGS)
+
 libc_root := bionic/libc
 libm_root := bionic/libm
 libstdc++_root := bionic/libstdc++
