@@ -1730,12 +1730,12 @@ endif
 	$(hide) (cd `dirname $(CMREMIX_TARGET_PACKAGE)` && $(MD5SUM) `basename $(CMREMIX_TARGET_PACKAGE)` > $(CMREMIX_TARGET_PACKAGE).md5sum)
 	@echo -e ""
 	@echo -e ${CL_BLD}${CL_GRN}"===============================-Package complete-==============================="${CL_RST}
-	@echo -e ${CL_BLD}${CL_RED}"Zip: "${CL_YLW} $(CMREMIX_TARGET_PACKAGE)${CL_RST}
-	@echo -e ${CL_BLD}${CL_RED}"MD5: "${CL_YLW}" `cat $(CMREMIX_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"Zip: "${CL_CYN} $(CMREMIX_TARGET_PACKAGE)${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"MD5: "${CL_CYN}" `cat $(CMREMIX_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
 ifeq ($(HOST_OS),darwin)
-	@echo -e ${CL_BLD}${CL_RED}"Size:"${CL_YLW}" `ls -lah $(CMREMIX_TARGET_PACKAGE) | cut -d ' ' -f 9`"${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"Size:"${CL_CYN}" `ls -lah $(CMREMIX_TARGET_PACKAGE) | cut -d ' ' -f 9`"${CL_RST}
 else
-	@echo -e ${CL_BLD}${CL_RED}"Size:"${CL_YLW}" `ls -lah $(CMREMIX_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"Size:"${CL_CYN}" `ls -lah $(CMREMIX_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
 endif
 	@echo -e ${CL_BLD}${CL_GRN}"================================================================================"${CL_RST}
 
