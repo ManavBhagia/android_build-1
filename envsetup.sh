@@ -2653,21 +2653,17 @@ function chromium_prebuilt() {
     export TARGET_DEVICE=$(get_build_var TARGET_DEVICE)
     hash=$T/prebuilts/chromium/$TARGET_DEVICE/hash.txt
 
-    # colors
-    . $T/vendor/pac/tools/colors
-
     if [ -r $hash ] && [ $(git --git-dir=$T/external/chromium_org/.git --work-tree=$T/external/chromium_org rev-parse --verify HEAD) == $(cat $hash) ] && [ -f $libsCheck ] && [ -d $appCheck ]; then
         export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=yes
-        echo -e "${bldblu}Prebuilt Chromium is up-to-date: ${bldgrn}Will be used for build"
+        echo -e "${bldcya}Prebuilt Chromium is up-to-date: ${bldgrn}Will be used for build${rst}"
     else
         export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=no
         if [ -f $hash ]; then
-            echo -e "${bldblu}Prebuilt Chromium out-of-date: ${bldylw}Will build from source"
+            echo -e "${bldcya}Prebuilt Chromium out-of-date: ${bldylw}Will build from source${rst}"
         else
-            echo -e "${bldblu}Prebuilt Chromium not found: ${bldred}Will build from source"
+            echo -e "${bldcya}Prebuilt Chromium not found: ${bldred}Will build from source${rst}"
         fi
     fi
-    echo -e "${txtrst}"
 }
 
 function make()
