@@ -1682,7 +1682,7 @@ endif
 
 BOOT_ZIP_FROM_IMAGE_SCRIPT := ./build/tools/releasetools/boot_flash_from_image
 KERNEL_PATH := $(TARGET_KERNEL_SOURCE)/arch/arm/configs/$(TARGET_KERNEL_CONFIG)
-BOOT_ZIP_OUT_FILE := CMRemix-Kernel-$(DEVICE)-$(shell date +%Y%m%d-%H%M%S).zip
+BOOT_ZIP_OUT_FILE := CMRemix-ZION959-Kernel-$(DEVICE)-$(shell date +%Y%m%d-%H%M%S).zip
 
 ifeq ($(TARGET_OTA_ASSERT_DEVICE),)
     $(INTERNAL_OTA_PACKAGE_TARGET): override_device := auto
@@ -1743,7 +1743,8 @@ bootzip: bootimage
 	$(BOOT_ZIP_FROM_IMAGE_SCRIPT) \
 	   $(recovery_fstab) \
 	   $(OUT) \
-	   $(TARGET_DEVICE)
+	   $(TARGET_DEVICE) \
+	   $(BOOT_ZIP_OUT_FILE)
 
 # -----------------------------------------------------------------
 # The factory package
