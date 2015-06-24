@@ -102,10 +102,10 @@ $(combo_2nd_arch_prefix)TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 # Modules can choose to compile some source as arm.
 $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS := -fomit-frame-pointer
 
-ifneq ($(strip $(O3_OPTIMIZATIONS)),true)
-  $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -O2 -g
+ifneq ($(strip $(LOCAL_O3)),true)
+  $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -O2
 endif
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
   $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -fstrict-aliasing
 endif
 
@@ -185,8 +185,8 @@ $(combo_2nd_arch_prefix)TARGET_RELEASE_CFLAGS := \
 			-fgcse-after-reload \
 			-frename-registers
 
-ifneq ($(strip $(O3_OPTIMIZATIONS)),true)
-  TARGET_RELEASE_CFLAGS += -O2 -g
+ifneq ($(strip $(LOCAL_O3)),true)
+  TARGET_RELEASE_CFLAGS += -O2
 endif
 
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += $(BOARD_GLOBAL_CFLAGS)
