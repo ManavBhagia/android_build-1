@@ -1049,9 +1049,11 @@ FULL_SYSTEMIMAGE_DEPS := $(INTERNAL_SYSTEMIMAGE_FILES) $(INTERNAL_USERIMAGES_DEP
 # system image.
 INSTALLED_FILES_FILE := $(PRODUCT_OUT)/installed-files.txt
 $(INSTALLED_FILES_FILE): $(FULL_SYSTEMIMAGE_DEPS)
+ifeq ($(BUILD_CMREMIX_CHANGELOG),true)
 	@echo -e ${CL_YLW}"Start Generating CMRemix Roms Changelog"${CL_RST}
 	$(hide) ./vendor/cmremix/tools/changelog.sh
 	$(hide) mv $(PRODUCT_OUT)/Changelog.txt $(PRODUCT_OUT)/$(CMREMIX_BUILD_VERSION).changelog
+endif
 	@echo Installed file list: $@
 	@mkdir -p $(dir $@)
 	@rm -f $@
