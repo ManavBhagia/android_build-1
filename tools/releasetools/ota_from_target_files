@@ -722,6 +722,12 @@ delete_recursive("/data/UKM");
 run_program("/sbin/sh", "-c", "mv /system/UKM /data/");
 run_program("/sbin/sh", "-c", "chmod -R 775 /data/UKM");""")
 
+  script.Print("Flashing Viper4Android...")
+  common.ZipWriteStr(output_zip, "v4a/v4a.zip",
+                 ""+input_zip.read("SYSTEM/addon.d/v4a.zip"))
+
+  script.FlashV4A()
+
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
 
