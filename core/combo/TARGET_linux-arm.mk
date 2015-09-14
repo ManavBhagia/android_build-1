@@ -223,7 +223,6 @@ TARGET_LTO_CFLAGS += \
        -fno-toplevel-reorder \
        -fuse-linker-plugin \
        -D__LTO__ \
-       -fwhopr \
        -flto-compression-level=$(LTO_COMPRESSION_LEVEL) \
        -flto-report \
        -c-lto \
