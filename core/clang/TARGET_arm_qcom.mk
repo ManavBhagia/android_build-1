@@ -44,11 +44,11 @@ CLANG_QCOM_CONFIG_LLVM_DEFAULT_FLAGS := \
   #-fpic
 
 CLANG_QCOM_CONFIG_LLVM_EXTRA_FLAGS := \
-  -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof \
+  -O3 -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof \
   -Wno-tautological-constant-out-of-range-compare \
   -fcolor-diagnostics \
   -fstrict-aliasing \
-  -Wstrict-aliasing=2 \
+  -Wstrict-aliasing=3 \
   -Werror=strict-aliasing \
   -fuse-ld=gold \
   -Wno-missing-field-initializers \
