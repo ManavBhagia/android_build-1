@@ -94,6 +94,17 @@ ifeq ($(USE_CLANG_QCOM_LTO),true)
   #-c-lto
 endif
 
+# Only use Polly on Linux
+ifeq ($(BUILD_OS),linux)
+  POLLYCC := -mllvm -polly \
+             -mllvm -polly-allow-nonaffine=1\
+             -mllvm -polly-ignore-aliasing=1 \
+             -mllvm -polly-ast-detect-parallel \
+             -mllvm -polly-disable-multiplicative-reductions
+else
+  POLLYCC :=
+endif
+
 ifeq ($(USE_CLANG_QCOM_VERBOSE),true)
   CLANG_QCOM_VERBOSE := -v 
   #-ccc-print-phases \
@@ -425,3 +436,8 @@ CLANG_QCOM_NO-ALIGN-OS_MODULES += \
   libnativebridge
 
 CLANG_QCOM_NO-ALIGN-OS_MODULES :=
+
+# Disable Polly flags for certain modules
+DISABLE_POLLY := \
+  v8_tools_gyp_v8_base_arm_host_gyp%
+

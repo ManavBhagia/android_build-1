@@ -53,3 +53,20 @@ $(info ldflags            : $(my_ldflags))
 $(info conly              : $(LOCAL_CONLYFLAGS))
 $(info )
 endif
+
+ifeq ($(USE_CLANG_QCOM_POLLY),true)
+    ifdef POLLYCC
+      ifneq (1,$(words $(filter $(DISABLE_POLLY),$(LOCAL_MODULE))))
+        ifdef LOCAL_CFLAGS
+          LOCAL_CFLAGS += $(POLLYCC)
+        else
+          LOCAL_CFLAGS := $(POLLYCC)
+        endif
+        ifdef LOCAL_CPPFLAGS
+          LOCAL_CPPFLAGS += $(POLLYCC)
+        else
+          LOCAL_CPPFLAGS := $(POLLYCC)
+        endif
+     endif
+   endif
+endif
