@@ -57,6 +57,7 @@ CLANG_CONFIG_UNKNOWN_CFLAGS := \
   -Wmaybe-uninitialized \
   -Wno-maybe-uninitialized \
   -Wno-error=maybe-uninitialized \
+  -Wno-clobbered \
   -fno-canonical-system-headers
 
 # Clang flags for all host rules
