@@ -522,7 +522,6 @@ def CopyInstallTools(output_zip):
       install_target = os.path.join("install", os.path.relpath(root, install_path), f)
       output_zip.write(install_source, install_target)
 
-
 def WriteFullOTAPackage(input_zip, output_zip):
   # TODO: how to determine this?  We don't know what version it will
   # be installed on top of. For now, we expect the API just won't
@@ -632,6 +631,26 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   system_progress = 0.75
 
+  script.Print("   _____ __  __ _____                _       ")
+  script.Print("  / ____|  \/  |  __ \              (_)      ")
+  script.Print(" | |    | \  / | |__) |___ _ __ ___  ___  __ ")
+  script.Print(" | |    | |\/| |  _  // _ \ '_ ` _ \| \ \/ / ")
+  script.Print(" | |____| |  | | | \ \  __/ | | | | | |>  <  ")
+  script.Print("  \_____|_|  |_|_|  \_\___|_| |_| |_|_/_/\_\ ")
+  script.Print("                        _                    ")
+  script.Print("                     /\| |/\                 ")
+  script.Print("                     \ ` ' /                 ")
+  script.Print("                    |_     _|                ")
+  script.Print("                     / , . \                 ")
+  script.Print("                     \/|_|\/                 ")
+  script.Print("    ___________ ____  _   _  ___  _____ ___  ")
+  script.Print("   |___  /_   _/ __ \| \ | |/ _ \| ____/ _ \ ")
+  script.Print("      / /  | || |  | |  \| | (_) | |__| (_) |")
+  script.Print("     / /   | || |  | | . ` |\__, |___ \\__, |")
+  script.Print("    / /__ _| || |__| | |\  |  / / ___) | / / ")
+  script.Print("   /_____|_____\____/|_| \_| /_/ |____/ /_/  ")
+  script.Print(" ")
+
   if OPTIONS.wipe_user_data:
     system_progress -= 0.1
   if HasVendorPartition(input_zip):
@@ -659,18 +678,25 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     # image.  This has the effect of writing new data from the package
     # to the entire partition, but lets us reuse the updater code that
     # writes incrementals to do it.
+    script.Print("Formatting system partition...")
+    script.FormatPartition("/system")
+    script.Print("Installing ROM...")
+    script.Print("Updating system partition")
     system_tgt = GetImage("system", OPTIONS.input_tmp, OPTIONS.info_dict)
     system_tgt.ResetFileMap()
     system_diff = common.BlockDifference("system", system_tgt, src=None)
     system_diff.WriteScript(script, output_zip)
   else:
+    script.Print("{*} Formatting /system")
     script.FormatPartition("/system")
     script.Mount("/system", recovery_mount_options)
     if not has_recovery_patch:
       script.UnpackPackageDir("recovery", "/system")
+    script.Print("{*} Extracting /system")
     script.UnpackPackageDir("system", "/system")
 
     symlinks = CopyPartitionFiles(system_items, input_zip, output_zip)
+    script.Print("{*} Symlinking")
     script.MakeSymlinks(symlinks)
 
   boot_img = common.GetBootableImage("boot.img", "boot.img",
@@ -684,6 +710,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     common.MakeRecoveryPatch(OPTIONS.input_tmp, output_sink,
                              recovery_img, boot_img)
 
+    script.Print("{*} Setting permissions")
     system_items.GetMetadata(input_zip)
     system_items.Get("system").SetPermissions(script)
 
@@ -713,6 +740,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   device_specific.FullOTA_PostValidate()
 
   if OPTIONS.backuptool:
+    script.Print("{*} Restoring backup")
     script.ShowProgress(0.02, 10)
     if block_based:
       script.Mount("/system")
@@ -720,6 +748,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     if block_based:
       script.Unmount("/system")
 
+  script.Print("{*} Flashing boot.img")
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
 
@@ -729,11 +758,15 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   if OPTIONS.extra_script is not None:
     script.AppendExtra(OPTIONS.extra_script)
 
+  script.Print("{*} Unmounting")
   script.UnmountAll()
 
   if OPTIONS.wipe_user_data:
+    script.Print("{*} Formatting user data")
     script.ShowProgress(0.1, 10)
     script.FormatPartition("/data")
+
+  script.Print("{+} Enjoy CMRemix Rom!")
 
   if OPTIONS.two_step:
     script.AppendExtra("""
