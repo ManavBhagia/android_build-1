@@ -131,7 +131,6 @@ $(info ============================================)
 $(foreach v, $(print_build_config_vars),\
   $(info $v=$($(v))))
 $(info ============================================)
-endif
 $(info =====================================================================)
 ifdef TARGET_DEVICE
 $(info   TARGET_DEVICE=$(TARGET_DEVICE))
