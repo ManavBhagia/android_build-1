@@ -1,5 +1,18 @@
 # Put some miscellaneous rules here
 
+# Build system colors
+
+ifneq ($(BUILD_WITH_COLORS),0)
+  CL_RED="\033[31m"
+  CL_GRN="\033[32m"
+  CL_YLW="\033[33m"
+  CL_BLU="\033[34m"
+  CL_MAG="\033[35m"
+  CL_CYN="\033[36m"
+  CL_RST="\033[0m"
+  CL_BLD="\033[1m"
+endif
+
 # HACK: clear LOCAL_PATH from including last build target before calling
 # intermedites-dir-for
 LOCAL_PATH := $(BUILD_SYSTEM)
@@ -2223,14 +2236,22 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE)
 	   $(if $(OEM_OTA_CONFIG), -o $(OEM_OTA_CONFIG)) \
 	   $(BUILT_TARGET_FILES_PACKAGE) $@
 
-CM_TARGET_PACKAGE := $(PRODUCT_OUT)/cm-$(CM_VERSION).zip
+CMREMIX_TARGET_PACKAGE := $(PRODUCT_OUT)/$(CMREMIX_BUILD_VERSION).zip
 
 .PHONY: otapackage bacon
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 bacon: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CM_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(CM_TARGET_PACKAGE) > $(CM_TARGET_PACKAGE).md5sum
-	@echo "Package Complete: $(CM_TARGET_PACKAGE)"
+	$(hide) find $(PRODUCT_OUT) -maxdepth 1 -xdev -samefile $(INTERNAL_OTA_PACKAGE_TARGET) | grep -v ota-$(FILE_NAME_TAG) | xargs rm -f
+	$(hide) rm -f $(PRODUCT_OUT)/*.md5sum
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CMREMIX_TARGET_PACKAGE)
+	$(hide) (cd `dirname $(CMREMIX_TARGET_PACKAGE)` && $(MD5SUM) `basename $(CMREMIX_TARGET_PACKAGE)` > $(CMREMIX_TARGET_PACKAGE).md5sum)
+	@echo -e ""
+	@echo -e ${CL_BLD}${CL_GRN}"===============================-Package complete-==============================="${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"OUTDIR:"${CL_YLW} $(PRODUCT_OUT)${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"   ROM:"${CL_YLW} $(CMREMIX_BUILD_VERSION).zip${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"   MD5:"${CL_YLW}" `cat $(CMREMIX_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"  SIZE:"${CL_YLW}" `du -h $(CMREMIX_TARGET_PACKAGE) | cut -f1`"${CL_RST}
+	@echo -e ${CL_BLD}${CL_GRN}"================================================================================"${CL_RST}
 
 endif    # build_ota_package
 # -----------------------------------------------------------------
