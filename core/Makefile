@@ -247,7 +247,7 @@ endif
 	$(hide) TARGET_BUILD_TYPE="$(TARGET_BUILD_VARIANT)" \
 			TARGET_BUILD_FLAVOR="$(TARGET_BUILD_FLAVOR)" \
 			TARGET_DEVICE="$(TARGET_VENDOR_DEVICE_NAME)" \
-			CM_DEVICE="$(TARGET_DEVICE)" \
+			CMREMIX_DEVICE="$(TARGET_DEVICE)" \
 			PRODUCT_NAME="$(TARGET_VENDOR_PRODUCT_NAME)" \
 			PRODUCT_BRAND="$(PRODUCT_BRAND)" \
 			PRODUCT_DEFAULT_LOCALE="$(call get-default-product-locale,$(PRODUCT_LOCALES))" \
@@ -1266,7 +1266,7 @@ INSTALLED_FILES_FILE := $(PRODUCT_OUT)/installed-files.txt
 $(INSTALLED_FILES_FILE): $(FULL_SYSTEMIMAGE_DEPS)
 ifneq ($(BUILD_CMREMIX_CHANGELOG),false)
 	@echo -e ${CL_BLD}"Start Generating CMRemix Roms Changelog"${CL_RST}
-	$(hide) ./vendor/cm/tools/changelogger
+	$(hide) ./vendor/cmremix/tools/changelogger
 	$(hide) mv $(PRODUCT_OUT)/Changelog.txt $(PRODUCT_OUT)/$(CMREMIX_BUILD_VERSION).changelog
 endif
 	@echo Installed file list: $@
@@ -1338,14 +1338,14 @@ endef
 $(BUILT_SYSTEMIMAGE): $(FULL_SYSTEMIMAGE_DEPS) $(INSTALLED_FILES_FILE)
 	$(call build-systemimage-target,$@)
 
-ifndef I_WANT_A_QUAIL_STAR
-ifneq ($(WITHOUT_CHECK_API),true)
-$(BUILT_SYSTEMIMAGE): checkapi
-ifneq ($(TARGET_DISABLE_CMSDK),true)
-$(BUILT_SYSTEMIMAGE): checkapi-cm
-endif
-endif
-endif
+#ifndef I_WANT_A_QUAIL_STAR
+#ifneq ($(WITHOUT_CHECK_API),true)
+#$(BUILT_SYSTEMIMAGE): checkapi
+#ifneq ($(TARGET_DISABLE_CMSDK),true)
+#$(BUILT_SYSTEMIMAGE): checkapi-cm
+#endif
+#endif
+#endif
 
 INSTALLED_SYSTEMIMAGE := $(PRODUCT_OUT)/system.img
 SYSTEMIMAGE_SOURCE_DIR := $(TARGET_OUT)
@@ -2205,7 +2205,7 @@ endif
 ifeq ($(WITH_GMS),true)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
 else
-ifneq ($(CM_BUILD),)
+ifneq ($(CMREMIX_BUILD),)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
 else
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
@@ -2258,10 +2258,10 @@ bacon: otapackage
 	$(hide) (cd `dirname $(CMREMIX_TARGET_PACKAGE)` && $(MD5SUM) `basename $(CMREMIX_TARGET_PACKAGE)` > $(CMREMIX_TARGET_PACKAGE).md5sum)
 	@echo -e ""
 	@echo -e ${CL_BLD}${CL_GRN}"===============================-Package complete-==============================="${CL_RST}
-	@echo -e ${CL_BLD}${CL_RED}"OUTDIR:"${CL_YLW} $(PRODUCT_OUT)${CL_RST}
-	@echo -e ${CL_BLD}${CL_RED}"   ROM:"${CL_YLW} $(CMREMIX_BUILD_VERSION).zip${CL_RST}
-	@echo -e ${CL_BLD}${CL_RED}"   MD5:"${CL_YLW}" `cat $(CMREMIX_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
-	@echo -e ${CL_BLD}${CL_RED}"  SIZE:"${CL_YLW}" `du -h $(CMREMIX_TARGET_PACKAGE) | cut -f1`"${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"OUTDIR:"${CL_BLD} $(PRODUCT_OUT)${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"   ROM:"${CL_BLD} $(CMREMIX_BUILD_VERSION).zip${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"   MD5:"${CL_BLD}" `cat $(CMREMIX_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"  SIZE:"${CL_BLD}" `du -h $(CMREMIX_TARGET_PACKAGE) | cut -f1`"${CL_RST}
 	@echo -e ${CL_BLD}${CL_GRN}"================================================================================"${CL_RST}
 
 bootzip: bootimage
